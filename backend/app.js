@@ -3,8 +3,8 @@ import express from 'express';
 import path from 'path';
 import ejsLayouts from 'express-ejs-layouts';
 
-import projectRouter from './backend/router/project.router.js';
-import issueRouter from './backend/router/issue.router.js';
+import projectRouter from './router/project.router.js';
+import issueRouter from './router/issue.router.js';
 
 const app = express();
 

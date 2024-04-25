@@ -11,14 +11,14 @@ const app = express();
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
 // Set the views directory
-app.set('views', path.join(path.resolve(),'backend','views'));
+app.set('views', path.join(path.resolve(),'backend/view'));
 
-// Middleware for handling JSON and URL-encoded data, ejs-templates
+// Middlewares for handling JSON, URL-encoded data and ejs-templates
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(ejsLayouts);
 
-//handle Home and Issue Routes
+//handling of Home and Issue routes
 app.use('/',projectRouter);
 app.use('/issue',issueRouter);
 

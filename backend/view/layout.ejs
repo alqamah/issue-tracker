@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Tracker</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<style>
+    body {
+        height: 100vh;
+        background: linear-gradient(black, #202020);
+        color: aliceblue;;
+    }
+    .navbar{
+        background: linear-gradient(90deg, white, aliceblue 10%, #000000 90%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0);    
+        animation: blink 0s ease-in-out infinite;
+        transition: .2s ease-in-out;
+    }
+    .navbar:hover{
+        animation: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.399);    
+    }
+    .anim-blink{
+        animation: blink2 1s 0.5s steps(1) infinite;
+    }
+
+    h2{
+        font-size: 2rem;
+        margin-left: 50%;
+        color: rgb(46, 17, 119);
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 700;
+    }
+
+    @keyframes blink {
+        0%{
+            border-bottom: 1px solid rgb(255, 255, 255);    
+
+        }50%{
+            border-bottom: 1px solid rgba(255, 255, 255, 0);    
+
+        }100%{
+            border-bottom: 1px solid rgb(255, 255, 255);
+        }    
+    }
+    @keyframes blink2 {
+        0%{
+            opacity: 100%; 
+
+        }50%{
+            opacity: 0%; 
+
+        }100%{
+            opacity: 100%; 
+
+        }    
+    }
+
+
+
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <logo>
+        <img src="data:image/png;base64,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">
+    </logo>
+    <a class="navbar-brand" href="#"><h2>issue-tracker</h2></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-bar"></span>
+    </button>
+  </nav> 
+
+  <%- body %>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

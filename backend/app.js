@@ -3,8 +3,7 @@ import express from 'express';
 import path from 'path';
 import ejsLayouts from 'express-ejs-layouts';
 
-import projectRouter from './router/project.router.js';
-import issueRouter from './router/issue.router.js';
+import router from './router/router.js';
 
 const app = express();
 
@@ -18,8 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(ejsLayouts);
 
-//handling of Home and Issue routes
-app.use('/',projectRouter);
-app.use('/issue',issueRouter);
+//router
+app.use('/',router);
 
 export default app;

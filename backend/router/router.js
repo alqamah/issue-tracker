@@ -1,11 +1,11 @@
 import express from 'express';
-import {ProjectController} from '../controller/project.controller.js'
+import {ProjectController} from '../controller/controller.js'
 
 const router = express.Router();
 const projectController = new ProjectController();
 
 router.use((req,res,next)=>{
-    //console.log("url: ",req.url);
+    console.log("url: ",req.url);
     next();
 })
 
@@ -17,12 +17,22 @@ router.post('/', (req, res) => {
     projectController.createProject(req, res);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/project/:id', (req, res) => {
     projectController.deleteProject(req, res);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/project/:id', (req, res) => {
     projectController.openProject(req, res);
 });
+
+router.post('/project/:id', (req, res) => {
+    console.log("new issue router");
+    projectController.createIssue(req, res);
+});
+
+router.get('/issue/:id', (req, res) => {
+    projectController.openIssue(req, res);
+});
+
 
 export default router;

@@ -117,13 +117,13 @@
   <div class="container my-4 ">
     <div id="h">
     <header>
-      <div id="h-date"><h6>DATE OF CREATION</h6><h1 class="mb-4 issue-date"><%= issue.date %>&nbsp;</h1></div>
-      <div id="h-author"><h6>ISSUE AUTHOR</h6><h1 class="mb-4"><%= issue.author %>&nbsp;</h1></div>
-      <div id="h-name"><h6>ISSUE NAME</h6><h1 class="mb-4"><%= issue.name %></h1><h1 class="mb-4 anim-blink">_</h1></div>
+      <div id="h-date"><h6>DATE OF CREATION</h6><h1 class="mb-4 project-date"><%= project.date %>&nbsp;</h1></div>
+      <div id="h-author"><h6>PROJECT AUTHOR</h6><h1 class="mb-4"><%= project.author %>&nbsp;</h1></div>
+      <div id="h-name"><h6>PROJECT NAME</h6><h1 class="mb-4"><%= project.name %></h1><h1 class="mb-4 anim-blink">_</h1></div>
     </header>
     <div id="h-description">
-      <h4>ISSUE DESCRIPTION</h4>
-      <p><%= issue.description %></p>
+      <h4>PROJECT DESCRIPTION</h4>
+      <p><%= project.description %></p>
     </div>
     
     </div>
@@ -150,11 +150,86 @@
     <% } %>
   </div>
   
-
+  <!-- Create Issue Modal -->
+  <div class="modal fade" id="createIssueModal" tabindex="-1" role="dialog" aria-labelledby="createIssueModalLabel" aria-hidden="true" data-project-id="<%= project._id %>">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createIssueModalLabel">Create New Issue</h5>
+          <button type="button" class="close close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="createIssueForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="issueName">Issue Name</label>
+              <input type="text" class="form-control" id="issueName" name="issueName" placeholder="Enter issue name" required>
+            </div>
+            <div class="form-group">
+              <label for="issueDescription">Issue Description</label>
+              <textarea class="form-control" id="issueDescription" name="issueDescription" rows="3" placeholder="Enter issue description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="issueAuthor">Issue Creator</label>
+              <input type="text" class="form-control" id="issueAuthor" name="issueAuthor" placeholder="Enter issue author" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn modal-cancel" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn modal-submit">Create Issue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+
+
+  <script>
+
+
+    const projectId= $('#createIssueModal').data('project-id')
+    //create Issue
+    $(document).ready(function() {
+      // Show the modal when the "Create New Project" button is clicked
+      $('button[data-target="#createIssueModal"]').click(function() {
+        $('#createIssueModal').modal('show');
+      });
+  
+      // Handle form submission when the "Create Project" button is clicked
+      $('#createIssueForm').submit(function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        const formData = {
+          issueName: $('#issueName').val(),
+          issueDescription: $('#issueDescription').val(),
+          issueAuthor: $('#issueAuthor').val(),
+          projectId: projectId
+        }; 
+        sendResponse(formData);
+        window.location.href = '/project/'+projectId;
+
+      });
+    });
+  
+    async function sendResponse(data){
+      console.log("sending response");
+      const url = '/project/'+projectId;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      console.log(data);
+    }
+  
+  </script>
 
   

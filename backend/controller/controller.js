@@ -74,8 +74,9 @@ export class ProjectController {
             const status = req.body.issueStatus || "Open";
             const timestamp = this.formatDate(new Date());
             const project = await this.project.findById(id);
+            const label = req.body.issueLabel;
             //console.log("Issue:",title, description, status, author, timestamp, project);
-            const issue = new this.issue({title, description, status, author, timestamp, project});
+            const issue = new this.issue({title, description, label, status, author, timestamp, project});
             const result = await issue.save();
             project.issues.push(issue.id);
             await project.save();

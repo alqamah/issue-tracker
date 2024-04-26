@@ -11,10 +11,6 @@ export class ProjectController {
     async getProjects(req, res) {
         try{
             const projects = await this.project.find({});
-            for(const p of projects){
-                console.log(p);
-                console.log(p.issues.length);
-            }
             res.render('index.ejs', {projects});
         } catch (error) {
             console.log(error);
@@ -103,18 +99,21 @@ export class ProjectController {
             console.log(error);
             res.status(500).json({ message: error.message });
         }
-    } //fe pending
+    } 
 
     async deleteIssue(req, res) {
         try{
             const {id} = req.params;
             const issue = await this.issue.findByIdAndDelete(id);
-            res.status(200).redirect('/project/'+issue.project);
+            const project = await this.project.findById(issue.project);
+            project.issues.pull(issue.id);
+            await project.save();
+            res.status(200).redirect('/');
         }catch(error){
             console.log(error);
             res.status(500).json({ message: error.message });
         }
-    } //fe pending
+    } 
 
     async openIssue(req, res){
         try{

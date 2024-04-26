@@ -132,14 +132,16 @@
         $('.resolve-issue').removeClass("inactive");  
       }
 
-      // script to handle delete-project btn-click
+      // script to handle delete-issue btn-click
       $('.delete-issue').click(function(e) {
+        //console.log('delete issue');
         e.preventDefault();  
         if (confirm('Are you sure you want to delete this project?')) {
           fetch(`/issue/${issueId}`, {
             method: 'DELETE',
           })
           .then(response => {
+            //console.log('delete issue',issueId);
             window.location.href = `/`;
           })
           .catch(error => {

@@ -26,12 +26,19 @@ router.get('/project/:id', (req, res) => {
 });
 
 router.post('/project/:id', (req, res) => {
-    console.log("new issue router");
     projectController.createIssue(req, res);
 });
 
 router.get('/issue/:id', (req, res) => {
     projectController.openIssue(req, res);
+});
+
+router.get('/issue/resolve/:id', (req, res) => {
+    projectController.closeIssue(req, res);
+});
+
+router.delete('/issue/:id', (req, res) => {
+    projectController.deleteIssue(req, res);
 });
 
 

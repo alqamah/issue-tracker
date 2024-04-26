@@ -47,6 +47,8 @@
       font-size: 1.2rem;
       font-family: 'Courier New', Courier, monospace;
       cursor: pointer;
+      width: 100%;
+
     }
     /* #h{
       border: 1px solid rgba(255, 255, 255, 0.585);
@@ -54,6 +56,17 @@
       margin: 20px 0;
       padding: 10px;
     } */
+    .issue-item{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background-color: #000000;
+    color: aliceblue;
+    border: 1px solid #313131;
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
+    }
     .list-group-item:hover{
     background-color: white;
     color: black;
@@ -85,8 +98,21 @@
       padding: 2%;
       border-radius: 5px;
       font-family: 'Courier New', Courier, monospace;
-  
     }
+
+    .issue-actions {
+      margin-left: auto;
+      padding: 0 10px;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .delete-project,
+    .edit-project {
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+    }
+
     .modal-submit{
       background-color: #474747;
       color: white;
@@ -139,11 +165,21 @@
     <% } else { %>
       <ul class="list-group">
         <% issues.forEach(issue => { %>
-          <li class="list-group-item">
-            <desc><%= issue.timestamp %></desc>
-            <p><%= issue.title %></p>
-            <desc>by <b><%= issue.author %></b></desc>
-            <issue-status>status : <b><%= issue.status %></b></issue-status>
+          <li class="issue-item">
+            <div class="list-group-item" data-issue-id="<%= issue._id %>">
+              <desc><%= issue.timestamp %></desc>
+              <p><%= issue.title %></p>
+              <desc>by <b><%= issue.author %></b></desc>
+              <issue-status>status : <b><%= issue.status %></b></issue-status>          
+            </div>
+            <!-- <div class="issue-actions">
+              <button class="btn btn-sm btn-danger delete-project" data-project-id="<%= project._id %>" title="Delete Project">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+              <button class="btn btn-sm btn-primary edit-project" data-project-id="<%= project._id %>" title="Edit Project">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div> -->
           </li>
         <% }) %>
       </ul>
@@ -190,10 +226,9 @@
 
 
 
-
+<!--script to handle new issue-modal and sending req to BE -->
   <script>
-
-
+    //new issue modal and response:
     const projectId= $('#createIssueModal').data('project-id')
     //create Issue
     $(document).ready(function() {
@@ -231,5 +266,16 @@
     }
   
   </script>
+
+<!--script to handle open-issue-->
+<script>
+  $(document).ready(function() {
+    // Add click event listener to project list items
+    $('.list-group-item').click(function() {
+      const issueId = $(this).data('issue-id');
+      window.location.href = `/issue/${issueId}`;
+    });
+  });
+</script>
 
   

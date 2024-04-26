@@ -11,6 +11,10 @@ export class ProjectController {
     async getProjects(req, res) {
         try{
             const projects = await this.project.find({});
+            for(const p of projects){
+                console.log(p);
+                console.log(p.issues.length);
+            }
             res.render('index.ejs', {projects});
         } catch (error) {
             console.log(error);
@@ -74,10 +78,12 @@ export class ProjectController {
             const status = req.body.issueStatus || "Open";
             const timestamp = this.formatDate(new Date());
             const project = await this.project.findById(id);
-            console.log("Issue:",title, description, status, author, timestamp, project);
+            //console.log("Issue:",title, description, status, author, timestamp, project);
             const issue = new this.issue({title, description, status, author, timestamp, project});
             const result = await issue.save();
-            console.log("result:",result);
+            project.issues.push(issue.id);
+            await project.save();
+            //console.log("project:",project);
             //res.status(201).redirect('/project/'+id);
         }catch(error){
             console.log(error);
@@ -115,7 +121,8 @@ export class ProjectController {
             const {id} = req.params;
             //console.log("id:",id);
             const issue = await this.issue.findById(id);
-            res.render('issue.ejs',{issue});
+            const project = await this.project.findById(issue.project);
+            res.render('issue.ejs',{issue, project});
         }catch(err){
             console.log(err);
             res.status(500).send(err.message);

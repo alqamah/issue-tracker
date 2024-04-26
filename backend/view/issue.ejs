@@ -74,41 +74,10 @@
     .list-group-item issue-status{
       margin: 0 20px 0 auto; 
     }
-    .modal-content{
-      background-color: #000000;
-      border: 5px solid rgb(59, 59, 59);
-      border-radius: 20px;
-      color: aliceblue;
-    }
-    .form-group{
-      background-color: rgb(37, 37, 37);
-      padding: 2%;
-      border-radius: 5px;
-      font-family: 'Courier New', Courier, monospace;
-  
-    }
-    .modal-submit{
-      background-color: #474747;
-      color: white;
-    }
-    .modal-submit:hover{
-      background-color: white;
-      color: #007523;
-    }
-    .modal-cancel{
-      background-color: #474747;
-      color: white;
+    .btn{
+        margin: 10px;
     }
 
-  
-    .close{
-      color: white;
-    }
-    .close:hover{
-      color: white;
-    }
-
- 
   
   
   </style>
@@ -117,9 +86,9 @@
   <div class="container my-4 ">
     <div id="h">
     <header>
-      <div id="h-date"><h6>DATE OF CREATION</h6><h1 class="mb-4 issue-date"><%= issue.date %>&nbsp;</h1></div>
+      <div id="h-date"><h6>DATE OF CREATION</h6><h1 class="mb-4 issue-date"><%= issue.timestamp %>&nbsp;</h1></div>
       <div id="h-author"><h6>ISSUE AUTHOR</h6><h1 class="mb-4"><%= issue.author %>&nbsp;</h1></div>
-      <div id="h-name"><h6>ISSUE NAME</h6><h1 class="mb-4"><%= issue.name %></h1><h1 class="mb-4 anim-blink">_</h1></div>
+      <div id="h-name"><h6>PROJECT NAME</h6><h1 class="mb-4"><%= project.name %></h1><h1 class="mb-4 anim-blink">_</h1></div>
     </header>
     <div id="h-description">
       <h4>ISSUE DESCRIPTION</h4>
@@ -127,27 +96,19 @@
     </div>
     
     </div>
-    <button type="button" class="btn btn-outline-light mb-3" data-toggle="modal" onclick="location.href='/'">
+    <button type="button" class="btn btn-outline-light mb-3" onclick="location.href='/project/<%=issue.project%>'">
       Back
     </button>
-    <button type="button" class="btn btn-outline-light mb-3" data-toggle="modal" data-target="#createIssueModal">
-      Create New Issue
+    <button type="button" class="btn btn-outline-danger mb-3 delete-issue"  >
+      Delete
     </button>
+    <button type="button" class="btn btn-success mb-3 resolve-issue " data-issue-id="<%= issue._id %>"data-issue-status="<%= issue.status %>" >
+      RESOLVE
+    </button>
+    <button type="button" class="btn btn-outline-light mb-3" onclick="location.href='/'">
+      Home
+    </button>    
     
-    <% if ((issues.length === 0) || (!issues)) { %>
-      <p>No Issues found.</p>
-    <% } else { %>
-      <ul class="list-group">
-        <% issues.forEach(issue => { %>
-          <li class="list-group-item">
-            <desc><%= issue.timestamp %></desc>
-            <p><%= issue.title %></p>
-            <desc>by <b><%= issue.author %></b></desc>
-            <issue-status>status : <b><%= issue.status %></b></issue-status>
-          </li>
-        <% }) %>
-      </ul>
-    <% } %>
   </div>
   
 
@@ -157,4 +118,44 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-  
+<script>
+    $(document).ready(function() {
+      const issueStatus = $('.resolve-issue').data('issue-status');
+      const issueId = $('.resolve-issue').data('issue-id');  
+
+      if(issueStatus === "Closed") {
+        $('.resolve-issue').removeClass('btn-success');
+        $('.resolve-issue').addClass('btn-outline-dark');
+        $('.resolve-issue').attr("disabled", true);
+        $('.resolve-issue').attr("title", "Issue already resolved");
+      } else {
+        $('.resolve-issue').removeClass("inactive");  
+      }
+
+      // script to handle delete-project btn-click
+      $('.delete-issue').click(function(e) {
+        e.preventDefault();  
+        if (confirm('Are you sure you want to delete this project?')) {
+          fetch(`/issue/${issueId}`, {
+            method: 'DELETE',
+          })
+          .then(response => {
+            window.location.href = `/`;
+          })
+          .catch(error => {
+            console.error('Error deleting issue:', error);
+            alert('Error deleting issue');
+          });
+        }
+      });
+
+      // script to handle resolve-issue btn-click
+      console.log("resoolve issue");
+      $('.resolve-issue').click(function() {
+        const issueId = $(this).data('issue-id');  
+        if(issueStatus=='Open')
+          window.location.href = `/issue/resolve/${issueId}`;
+      });
+
+    });
+</script>

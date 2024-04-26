@@ -24,7 +24,7 @@
     cursor: pointer;
     width: 100%;
   }
-  .project-list{
+  .project-item{
     display: flex;
     align-items: center;
     justify-content: left;
@@ -72,13 +72,7 @@
     font-family: 'Courier New', Courier, monospace;
 
   }
-  .project-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 0.5rem;
 
-  
-  }
   .project-actions {
   margin-left: auto;
   padding: 0 10px;
@@ -129,7 +123,7 @@
   <% } else { %>
     <ul class="list-group">
       <% projects.forEach(project => { %>
-        <li class="project-list">
+        <li class="project-item">
           <div class="list-group-item" data-project-id="<%= project._id %>">
             <desc><%= project.date %></desc>
             <p><%= project.name %></p>
@@ -140,7 +134,7 @@
             <button class="btn btn-sm btn-danger delete-project" data-project-id="<%= project._id %>" title="Delete Project">
               <i class="fas fa-trash-alt"></i>
             </button>
-            <button class="btn btn-sm btn-primary edit-project" data-project-id="<%= project._id %>" title="Edit Project">
+            <button class="btn btn-sm btn-secondary edit-project" data-project-id="<%= project._id %>" title="Edit Project">
               <i class="fas fa-edit"></i>
             </button>
           </div>

@@ -1,4 +1,4 @@
-﻿# polling-system-api
+﻿# issue-tracker
 Coding Ninjas Backend Skill-test Project to build an Issue Tracker Wesite. 
 
 ## Problem Statement

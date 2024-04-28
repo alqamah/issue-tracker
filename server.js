@@ -9,4 +9,4 @@ app.listen(3000, async (err) => {
         await connectDB();
         console.log(`server is running at http://localhost:3000`);
     }
-  });
+});

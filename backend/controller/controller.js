@@ -26,7 +26,7 @@ export class ProjectController {
             const date = this.formatDate(new Date());
             const project = new this.project({name, description, author, date});
             const result = await project.save();
-            console.log(result);
+            //console.log(result);
             res.status(201).send('Project created successfully');
         } catch (error) {
             console.log(error);

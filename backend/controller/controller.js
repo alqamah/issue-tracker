@@ -131,7 +131,7 @@ export class ProjectController {
 
 
     formatDate(date) {
-        console.log("date:", date);
+        //console.log("date:", date);
         if (date) {
           const day = String(date.getDate()).padStart(2, '0');
           const month = String(date.getMonth() + 1).padStart(2, '0');
